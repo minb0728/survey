@@ -1,0 +1,425 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>설문 제출 현황 · 기관 대조 도구</title><style>
+:root{--ink:#17243e;--muted:#68758e;--line:#e0e6f0;--violet:#6c55df;--mint:#32ad87}*{box-sizing:border-box}body{margin:0;background:#eef1f8;color:var(--ink);font-family:'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif}header{background:#142039;color:white;padding:24px 5vw;display:flex;justify-content:space-between;align-items:center;gap:20px}h1{font-size:25px;letter-spacing:-1px;margin:0 0 5px}header p{color:#b7c6df;font-size:13px;margin:0}main{max-width:1440px;margin:auto;padding:26px 4vw}h2{font-size:20px;margin:0 0 16px}h3{font-size:15px;margin:0 0 12px}button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:7px;padding:10px 15px;background:var(--violet);color:white;font-size:13px;font-weight:700}button.secondary{background:#e8e4fb;color:#5a45c4}button:disabled{opacity:.4;cursor:wait}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #8e9dff;outline-offset:2px}label{font-size:13px;color:#58647b;display:block;margin:12px 0 5px}input,select{max-width:100%;border:1px solid #d6ddeb;border-radius:6px;padding:9px;background:white;color:var(--ink);font-size:13px}input[type=url]{width:100%}input[type=file]{width:100%;font-size:12px}.inputs{display:grid;grid-template-columns:1fr 1.3fr;gap:18px}.panel{background:white;border:1px solid var(--line);border-radius:12px;padding:23px;margin-bottom:18px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.meta{font-size:12px;color:var(--muted);line-height:1.7}.notice{background:#e9e5ff;border-left:3px solid #8c78e9;padding:12px 15px;border-radius:5px;font-size:13px;line-height:1.8;margin-bottom:20px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:22px 0}.stat{background:white;padding:21px 24px;border:1px solid var(--line);border-radius:10px}.stat span{font-size:12px;color:#70809a}.stat strong{display:block;font-size:34px;margin-top:7px;letter-spacing:-1px}.stat:nth-child(2){background:#dff6ed}.stat:nth-child(2) strong{color:#167b5b}.stat:nth-child(3){background:#fff1df}.stat:nth-child(3) strong{color:#ad6b1d}.stat:nth-child(4){background:#e9e3ff}.stat:nth-child(4) strong{color:#6248cf}.contentgrid{display:grid;grid-template-columns:.9fr 1.6fr;gap:18px}.barrow{margin-bottom:19px}.barlabel{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px}.track{height:9px;background:#eeeaf8;border-radius:6px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#7460dc,#42bd94);border-radius:6px}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.filters input{flex:1;min-width:120px}.tablewrap{max-height:480px;overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:11px 9px;border-bottom:1px solid #e7eaf2;line-height:1.6;word-break:break-word}th{color:#6c7890;background:#f3f5fb;font-size:11px;position:sticky;top:0}.badge{padding:3px 8px;border-radius:4px;background:#ddf3e9;color:#207752;font-size:11px;white-space:nowrap}.badge.no{background:#fff0dc;color:#a66c22}.alert{margin:12px 0;padding:12px;border-radius:6px;background:#ffebeb;color:#9c3636;font-size:13px;line-height:1.7}.alert[hidden]{display:none}.mapping{display:flex;gap:10px;flex-wrap:wrap}.mapping>div{flex:1;min-width:130px}.mapping select{width:100%}.good{background:#e2f5eb;color:#24684e}.empty{color:#7d879b;padding:24px;text-align:center}.tag{color:#b1a3fd;font-size:11px;letter-spacing:1px}summary{cursor:pointer;font-size:13px;font-weight:700;color:#6853bc}.review{margin-top:18px}.foot{font-size:12px;color:var(--muted);line-height:1.8;margin-top:18px}a{color:#6854cf}#sourceStatus{white-space:pre-line}#error{position:sticky;top:10px;z-index:4}.mainbtn{font-size:15px;padding:13px 25px}.banner{display:flex;justify-content:space-between;align-items:center;gap:16px}.live-note{background:#f4f6fb;border-radius:7px;padding:13px;color:#59667f;font-size:12px;line-height:1.8}footer{padding:20px 4vw;border-top:1px solid var(--line);font-size:12px;color:#7b8599} @media(max-width:800px){header{padding:22px 5vw;align-items:flex-start;flex-direction:column}main{padding:18px 4vw}.inputs,.contentgrid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr;gap:10px}.stat{padding:16px}.stat strong{font-size:28px}.panel{padding:18px}h1{font-size:23px}.banner{align-items:flex-start;flex-direction:column}.filters input{width:100%}table{font-size:12px}td,th{padding:9px 6px}}
+.refresh-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;padding:10px 12px;background:#f2effc;border-radius:7px}.refresh-controls label{margin:0;font-size:12px}.refresh-toggle{display:flex;align-items:center;gap:7px;font-weight:700;color:#5d48b5}.refresh-toggle input{accent-color:#6c55df;width:16px;height:16px}.refresh-controls select{padding:7px 10px;font-size:12px}#refreshStatus{min-height:21px;margin:7px 0 0}#sourceStatus.stale{color:#a3601d;background:#fff1df;border-radius:6px;padding:10px}
+</style></head><body><header><div><div class="tag">CODEX WORKSHOP / FINAL PROJECT</div><h1>설문 제출 현황</h1><p>원본 기관 명단 × 설문 소속 대조 · 지역별 제출률</p></div><button id="demo" class="secondary">가상 예제 불러오기</button></header><main><div class="notice" id="demoNote">교육용 가상 기관·응답입니다. 권역은 실습용 분류이며 실제 제출 현황이 아닙니다. 업로드한 데이터는 이 브라우저에서 처리합니다.</div><div id="error" class="alert" role="alert" hidden></div><div class="inputs"><section class="panel"><h2>1. 대상 기관 원본 명단</h2><p class="meta">분모가 되는 전체 대상 목록입니다. 기관ID·지역·기관명 열이 필요합니다.</p><label for="rosterFile">기관 명단 CSV</label><input id="rosterFile" type="file" accept=".csv,text/csv"><p id="rosterStatus" class="meta">가상 기관 명단 사용</p><details><summary>CSV 형식 보기</summary><p class="meta">기관ID,지역,기관명<br>ORG-101,동부권,가온동부배움센터</p></details></section><section class="panel"><h2>2. 설문 응답 결과</h2><label for="sheetUrl">연결된 Google Sheets 주소 또는 게시 CSV 주소</label><input id="sheetUrl" type="url" placeholder="https://docs.google.com/spreadsheets/d/…"><div class="actions"><button id="loadSheet">Google 응답 수동 갱신</button></div><div class="refresh-controls"><label class="refresh-toggle"><input id="autoRefresh" type="checkbox" disabled> 자동 갱신</label><label for="refreshInterval">갱신 주기</label><select id="refreshInterval"><option value="30">30초</option><option value="60" selected>1분</option><option value="300">5분</option></select></div><p class="meta" id="refreshStatus" role="status" aria-live="polite">수동 갱신으로 Google 응답을 연결하면 자동 갱신을 켤 수 있습니다.</p><p class="meta">로그인 없이 읽을 수 있는 시트만 연결됩니다. 설문 작성 링크·결과 요약 화면은 사용할 수 없습니다.</p><label for="responseFile">또는 응답 CSV 파일 업로드</label><input id="responseFile" type="file" accept=".csv,text/csv"><div class="mapping"><div><label for="affCol">소속 열</label><select id="affCol"></select></div><div><label for="regionCol">지역 열 (선택)</label><select id="regionCol"></select></div></div><p class="meta" id="responseStatus"></p></section></div><div class="banner"><button id="analyze" class="mainbtn">명단과 비교하기</button><p id="sourceStatus" class="meta" role="status"></p></div><div class="stats" id="stats"></div><div class="live-note" id="comparisonMeta"></div><div class="contentgrid" style="margin-top:20px"><section class="panel"><h2>지역별 제출률</h2><div id="regionBars"></div><button class="secondary" id="exportRegions">지역별 요약 CSV ↓</button></section><section class="panel"><h2>기관별 제출 현황</h2><div class="filters"><select id="filterRegion" aria-label="지역 필터"><option value="">전체 지역</option></select><select id="filterState" aria-label="제출 상태"><option value="">전체 상태</option><option>제출</option><option>미제출</option></select><input id="search" type="search" aria-label="기관 검색" placeholder="기관명·기관ID 검색"></div><div class="tablewrap"><table><thead><tr><th>지역</th><th>기관명</th><th>상태</th><th>응답수</th></tr></thead><tbody id="orgTable"></tbody></table></div><div class="actions"><button class="secondary" id="exportMissing">전체 미제출 기관 CSV ↓</button><button class="secondary" id="exportAll">전체 제출 현황 CSV ↓</button></div><p class="meta">다운로드는 현재 필터와 무관한 전체 결과입니다.</p></section></div><section class="panel review"><h2>확인필요 응답 <span id="reviewCount"></span></h2><p class="meta">명단 밖 소속·빈칸·동명기관의 지역 누락 등은 자동 제출 처리하지 않습니다. 원본을 확인한 뒤 수정된 CSV로 다시 비교하세요.</p><div class="tablewrap"><table><thead><tr><th>원본 행</th><th>소속</th><th>응답 지역</th><th>확인 이유</th></tr></thead><tbody id="reviewTable"></tbody></table></div></section><details class="panel"><summary>집계 방식과 Google 연결 안내</summary><p class="foot">제출률 = 제출한 고유 대상기관 수 ÷ 원본 명단의 전체 대상기관 수 × 100. 같은 기관의 여러 응답은 제출 1기관으로 집계합니다. 지역별 분모·지역은 원본 명단을 따릅니다. 소속 비교는 문자 정규화·공백 제거만 하며 비슷한 이름을 추측해서 합치지 않습니다.<br>Google Forms 응답을 연결된 Sheets에 저장한 뒤, 공개 가능한 비식별 열만 사용하거나 CSV로 내려받아 업로드하세요. 실제 개인정보가 있는 응답 전체를 웹 게시하지 마세요. 이 도구는 Google 로그인·비공개 시트 읽기를 제공하지 않습니다. 네트워크·권한 오류 시 CSV 업로드를 사용합니다. 수동 갱신은 즉시 다시 읽고 비교합니다. 자동 갱신은 연결 성공 후 30초·1분·5분 주기로 다시 읽고 비교합니다. 페이지가 열린 동안 작동하며 브라우저 절전·백그라운드 상태로 늦어질 수 있습니다. Google 게시 자료의 반영 지연 때문에 설문 제출 즉시 반영되는 것을 보장하지 않습니다. CSV 파일은 새 파일을 다시 선택해야 합니다.<br><a href="https://support.google.com/docs/answer/2917686?hl=ko" target="_blank" rel="noopener">Google 공식 응답 저장 안내 ↗</a></p></details></main><footer>규칙 기반 업무 자동화 도구 · 생성형 AI 호출 및 API 키 사용 없음 · GitHub Pages 배포 가능</footer><script id="demo-data" type="application/json">{
+  "roster": [
+    {
+      "기관ID": "ORG-101",
+      "지역": "동부권",
+      "기관명": "가온동부배움센터"
+    },
+    {
+      "기관ID": "ORG-102",
+      "지역": "동부권",
+      "기관명": "다온동부배움센터"
+    },
+    {
+      "기관ID": "ORG-103",
+      "지역": "동부권",
+      "기관명": "누리동부배움센터"
+    },
+    {
+      "기관ID": "ORG-104",
+      "지역": "동부권",
+      "기관명": "마루동부배움센터"
+    },
+    {
+      "기관ID": "ORG-105",
+      "지역": "동부권",
+      "기관명": "새봄동부배움센터"
+    },
+    {
+      "기관ID": "ORG-106",
+      "지역": "동부권",
+      "기관명": "온빛동부배움센터"
+    },
+    {
+      "기관ID": "ORG-107",
+      "지역": "동부권",
+      "기관명": "이음동부배움센터"
+    },
+    {
+      "기관ID": "ORG-108",
+      "지역": "동부권",
+      "기관명": "한빛교육지원센터"
+    },
+    {
+      "기관ID": "ORG-201",
+      "지역": "서부권",
+      "기관명": "가온서부배움센터"
+    },
+    {
+      "기관ID": "ORG-202",
+      "지역": "서부권",
+      "기관명": "다온서부배움센터"
+    },
+    {
+      "기관ID": "ORG-203",
+      "지역": "서부권",
+      "기관명": "누리서부배움센터"
+    },
+    {
+      "기관ID": "ORG-204",
+      "지역": "서부권",
+      "기관명": "마루서부배움센터"
+    },
+    {
+      "기관ID": "ORG-205",
+      "지역": "서부권",
+      "기관명": "새봄서부배움센터"
+    },
+    {
+      "기관ID": "ORG-206",
+      "지역": "서부권",
+      "기관명": "온빛서부배움센터"
+    },
+    {
+      "기관ID": "ORG-207",
+      "지역": "서부권",
+      "기관명": "이음서부배움센터"
+    },
+    {
+      "기관ID": "ORG-208",
+      "지역": "서부권",
+      "기관명": "한빛교육지원센터"
+    },
+    {
+      "기관ID": "ORG-301",
+      "지역": "남부권",
+      "기관명": "가온남부배움센터"
+    },
+    {
+      "기관ID": "ORG-302",
+      "지역": "남부권",
+      "기관명": "다온남부배움센터"
+    },
+    {
+      "기관ID": "ORG-303",
+      "지역": "남부권",
+      "기관명": "누리남부배움센터"
+    },
+    {
+      "기관ID": "ORG-304",
+      "지역": "남부권",
+      "기관명": "마루남부배움센터"
+    },
+    {
+      "기관ID": "ORG-305",
+      "지역": "남부권",
+      "기관명": "새봄남부배움센터"
+    },
+    {
+      "기관ID": "ORG-306",
+      "지역": "남부권",
+      "기관명": "온빛남부배움센터"
+    },
+    {
+      "기관ID": "ORG-307",
+      "지역": "남부권",
+      "기관명": "이음남부배움센터"
+    },
+    {
+      "기관ID": "ORG-308",
+      "지역": "남부권",
+      "기관명": "한빛남부배움센터"
+    },
+    {
+      "기관ID": "ORG-401",
+      "지역": "북부권",
+      "기관명": "가온북부배움센터"
+    },
+    {
+      "기관ID": "ORG-402",
+      "지역": "북부권",
+      "기관명": "다온북부배움센터"
+    },
+    {
+      "기관ID": "ORG-403",
+      "지역": "북부권",
+      "기관명": "누리북부배움센터"
+    },
+    {
+      "기관ID": "ORG-404",
+      "지역": "북부권",
+      "기관명": "마루북부배움센터"
+    },
+    {
+      "기관ID": "ORG-405",
+      "지역": "북부권",
+      "기관명": "새봄북부배움센터"
+    },
+    {
+      "기관ID": "ORG-406",
+      "지역": "북부권",
+      "기관명": "온빛북부배움센터"
+    },
+    {
+      "기관ID": "ORG-407",
+      "지역": "북부권",
+      "기관명": "이음북부배움센터"
+    },
+    {
+      "기관ID": "ORG-408",
+      "지역": "북부권",
+      "기관명": "한빛북부배움센터"
+    },
+    {
+      "기관ID": "ORG-501",
+      "지역": "중부권",
+      "기관명": "가온중부배움센터"
+    },
+    {
+      "기관ID": "ORG-502",
+      "지역": "중부권",
+      "기관명": "다온중부배움센터"
+    },
+    {
+      "기관ID": "ORG-503",
+      "지역": "중부권",
+      "기관명": "누리중부배움센터"
+    },
+    {
+      "기관ID": "ORG-504",
+      "지역": "중부권",
+      "기관명": "마루중부배움센터"
+    },
+    {
+      "기관ID": "ORG-505",
+      "지역": "중부권",
+      "기관명": "새봄중부배움센터"
+    },
+    {
+      "기관ID": "ORG-506",
+      "지역": "중부권",
+      "기관명": "온빛중부배움센터"
+    },
+    {
+      "기관ID": "ORG-507",
+      "지역": "중부권",
+      "기관명": "이음중부배움센터"
+    },
+    {
+      "기관ID": "ORG-508",
+      "지역": "중부권",
+      "기관명": "한빛중부배움센터"
+    }
+  ],
+  "responses": [
+    {
+      "타임스탬프": "2026. 11. 2. 오전 10:10:00",
+      "소속": "가온동부배움센터",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 3. 오전 10:11:00",
+      "소속": "  다온동부배움센터  ",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 4. 오전 10:12:00",
+      "소속": "누리동부배움센터",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 2. 오전 10:13:00",
+      "소속": "마루동부배움센터",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 3. 오전 10:14:00",
+      "소속": "새봄동부배움센터",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 4. 오전 10:15:00",
+      "소속": "온빛동부배움센터",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 2. 오전 10:15:00",
+      "소속": "가온 서부 배움센터",
+      "지역": "서부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 3. 오전 10:16:00",
+      "소속": "다온서부배움센터",
+      "지역": "서부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 4. 오전 10:17:00",
+      "소속": "누리서부배움센터",
+      "지역": "서부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 2. 오전 10:18:00",
+      "소속": "마루서부배움센터",
+      "지역": "서부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 3. 오전 10:19:00",
+      "소속": "새봄서부배움센터",
+      "지역": "서부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 2. 오전 10:20:00",
+      "소속": "가온남부배움센터",
+      "지역": "남부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 3. 오전 10:21:00",
+      "소속": "다온남부배움센터",
+      "지역": "남부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 4. 오전 10:22:00",
+      "소속": "누리남부배움센터",
+      "지역": "남부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 2. 오전 10:23:00",
+      "소속": "마루남부배움센터",
+      "지역": "남부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 2. 오전 10:25:00",
+      "소속": "가온북부배움센터",
+      "지역": "북부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 3. 오전 10:26:00",
+      "소속": "다온북부배움센터",
+      "지역": "북부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 4. 오전 10:27:00",
+      "소속": "누리북부배움센터",
+      "지역": "북부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 2. 오전 10:30:00",
+      "소속": "가온중부배움센터",
+      "지역": "중부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 3. 오전 10:31:00",
+      "소속": "다온중부배움센터",
+      "지역": "중부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 5. 오후 2:30:00",
+      "소속": "가온동부배움센터",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 5. 오후 2:30:00",
+      "소속": "다온동부배움센터",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 5. 오후 2:30:00",
+      "소속": "누리동부배움센터",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026. 11. 5. 오후 2:30:00",
+      "소속": "마루동부배움센터",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026.11.5 15:00",
+      "소속": "명단밖미래센터",
+      "지역": "동부권"
+    },
+    {
+      "타임스탬프": "2026.11.5 15:10",
+      "소속": "",
+      "지역": "남부권"
+    },
+    {
+      "타임스탬프": "2026.11.5 15:20",
+      "소속": "한빛교육지원센터",
+      "지역": ""
+    }
+  ],
+  "notice": "교육용 가상 기관·응답입니다. 권역은 실습용 분류이며 공식 행정구역 구분이 아닙니다."
+}</script><script>
+const $=id=>document.getElementById(id),escapeHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));const demo=JSON.parse($('demo-data').textContent);let roster=[],responses=[],headers=[],result=null,rosterSource='',responseSource='',readTime='',readFailed=false;
+let autoTimer=null,countdownTimer=null,nextRefreshAt=0,connectedUrl='',refreshBusy=false,activeRequest=null,requestId=0,lastAttemptTime='',mappingChosen=false;
+const normalize=s=>String(s??'').normalize('NFKC').replace(/\s+/gu,'').trim();
+function parseCSV(text){text=text.replace(/^\uFEFF/,'');let rows=[],row=[],field='',quoted=false;for(let i=0;i<text.length;i++){let c=text[i];if(c==='"'){if(quoted&&text[i+1]==='"'){field+='"';i++}else if(!quoted&&field!=='')throw Error('CSV의 따옴표 형식을 확인하세요.');else quoted=!quoted}else if(c===','&&!quoted){row.push(field);field=''}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&text[i+1]==='\n')i++;row.push(field);if(row.some(v=>v!==''))rows.push(row);row=[];field=''}else field+=c}if(quoted)throw Error('CSV의 닫히지 않은 따옴표가 있습니다.');if(field!==''||row.length){row.push(field);if(row.some(v=>v!==''))rows.push(row)}if(!rows.length)throw Error('CSV가 비어 있습니다.');let heads=rows.shift().map(h=>h.trim());if(new Set(heads).size!==heads.length||heads.some(h=>!h))throw Error('열 이름이 비어 있거나 중복됩니다.');return {headers:heads,rows:rows.map((r,i)=>{if(r.length!==heads.length)throw Error(`CSV ${i+2}행의 열 개수가 다릅니다.`);return Object.fromEntries(heads.map((h,j)=>[h,r[j]]))})}}
+function csvText(rows,heads){const cell=v=>{let s=String(v??'');if(/^[=+@-]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"'};return '\uFEFF'+[heads,...rows.map(r=>heads.map(h=>r[h]))].map(r=>r.map(cell).join(',')).join('\r\n')}
+function error(message){$('error').textContent=message;$('error').hidden=false}
+function clearError(){$('error').hidden=true;$('error').textContent=''}
+function validateRoster(rows){if(!rows.length)throw Error('기관 원본 명단이 0개입니다.');const seen=new Set();for(const r of rows){for(const k of ['기관ID','지역','기관명'])if(!normalize(r[k]))throw Error(`기관 명단의 ${k}이 비어 있습니다.`);if(seen.has(r['기관ID'].trim()))throw Error('기관ID가 중복됩니다: '+r['기관ID']);seen.add(r['기관ID'].trim())}return rows.map(r=>({'기관ID':r['기관ID'].trim(),'지역':r['지역'].trim(),'기관명':r['기관명'].trim()}))}
+function setResponses(rows,heads,source){const prevAff=$('affCol').value,prevRegion=$('regionCol').value;responses=rows;headers=heads;responseSource=source;readTime=new Date().toLocaleString('ko-KR');readFailed=false;const opts=heads.map(h=>`<option value="${escapeHtml(h)}">${escapeHtml(h)}</option>`).join('');$('affCol').innerHTML='<option value="">소속 열을 선택하세요</option>'+opts;$('regionCol').innerHTML='<option value="">지역 열 없음</option>'+opts;let aff=heads.find(h=>['소속','기관명','소속기관','소속 기관','소속(기관명)'].includes(h));let reg=heads.find(h=>['지역','권역','소속지역'].includes(h));$('affCol').value=heads.includes(prevAff)?prevAff:aff||'';$('regionCol').value=mappingChosen&&prevRegion===''?'':heads.includes(prevRegion)?prevRegion:reg||'';$('responseStatus').textContent=`응답 ${rows.length}행을 읽었습니다. 사용할 열을 확인하세요.`}
+function compare(registry,rows,aff,reg){if(!aff)throw Error('응답에서 소속 열을 선택하세요.');let byName=new Map(),counts=new Map(),review=[];registry.forEach(r=>{const k=normalize(r['기관명']);if(!byName.has(k))byName.set(k,[]);byName.get(k).push(r);counts.set(r['기관ID'],0)});for(let i=0;i<rows.length;i++){const raw=rows[i][aff]??'',region=reg?rows[i][reg]??'':'',key=normalize(raw);let candidates=byName.get(key)||[];let reason='';if(!key)reason='소속이 비어 있음';else if(!candidates.length)reason='원본 명단에 없는 소속';else if(region){candidates=candidates.filter(x=>normalize(x['지역'])===normalize(region));if(!candidates.length)reason='소속명과 원본 지역이 일치하지 않음';else if(candidates.length>1)reason='동명기관을 지역으로도 구분할 수 없음'}else if(candidates.length>1)reason='동명기관: 응답 지역이 필요함';if(reason)review.push({'원본행':i+2,'소속':raw,'지역':region,'이유':reason});else{const id=candidates[0]['기관ID'];counts.set(id,counts.get(id)+1)}}let institutions=registry.map(r=>({...r,'상태':counts.get(r['기관ID'])?'제출':'미제출','응답수':counts.get(r['기관ID'])}));const submitted=institutions.filter(r=>r['상태']==='제출').length;const groups=[...new Set(registry.map(r=>r['지역']))].map(region=>{let rs=institutions.filter(r=>r['지역']===region),yes=rs.filter(r=>r['상태']==='제출').length;return {'지역':region,'대상기관':rs.length,'제출기관':yes,'미제출기관':rs.length-yes,'제출률':rs.length?(yes/rs.length*100).toFixed(1):'해당 없음'}});return {institutions,groups,review,total:registry.length,submitted,missing:registry.length-submitted,rate:registry.length?(submitted/registry.length*100).toFixed(1):'해당 없음',duplicate:rows.length-review.length-submitted,responseCount:rows.length}}
+function run(){try{clearError();if(readFailed)throw Error('응답 읽기에 실패했습니다. CSV를 업로드하거나 링크를 다시 읽은 후 비교하세요.');result=compare(validateRoster(roster),responses,$('affCol').value,$('regionCol').value);render()}catch(e){error(e.message)}}
+function render(){let r=result;$('stats').innerHTML=[['전체 대상기관',r.total],['제출 기관',r.submitted],['미제출 기관',r.missing],['전체 제출률',r.rate+'%']].map(([a,b])=>`<div class="stat"><span>${a}</span><strong>${b}</strong></div>`).join('');$('comparisonMeta').textContent=`원본 응답 ${r.responseCount}행 · 중복 응답 ${r.duplicate}행 · 확인필요 ${r.review.length}행. 여러 응답을 제출한 기관도 제출률에는 한 번만 포함합니다.`;updateSourceStatus();$('regionBars').innerHTML=r.groups.map(g=>`<div class="barrow"><div class="barlabel"><strong>${escapeHtml(g['지역'])}</strong><span>${g['제출기관']}/${g['대상기관']} · ${g['제출률']}%</span></div><div class="track"><div class="fill" style="width:${g['제출률']}%"></div></div></div>`).join('');let old=$('filterRegion').value;$('filterRegion').innerHTML='<option value="">전체 지역</option>'+r.groups.map(g=>`<option>${escapeHtml(g['지역'])}</option>`).join('');$('filterRegion').value=r.groups.some(g=>g['지역']===old)?old:'';renderInstitutions();$('reviewCount').textContent=r.review.length+'건';$('reviewTable').innerHTML=r.review.map(x=>'<tr>'+['원본행','소속','지역','이유'].map(k=>`<td>${escapeHtml(x[k]||'—')}</td>`).join('')+'</tr>').join('')||'<tr><td colspan="4" class="empty">확인필요 응답이 없습니다.</td></tr>'}
+function renderInstitutions(){if(!result)return;const reg=$('filterRegion').value,state=$('filterState').value,q=normalize($('search').value);const rows=result.institutions.filter(r=>(!reg||r['지역']===reg)&&(!state||r['상태']===state)&&(!q||normalize(r['기관명']+r['기관ID']).includes(q)));$('orgTable').innerHTML=rows.map(r=>`<tr><td>${escapeHtml(r['지역'])}</td><td>${escapeHtml(r['기관명'])}<br><span class="meta">${escapeHtml(r['기관ID'])}</span></td><td><span class="badge ${r['상태']==='미제출'?'no':''}">${r['상태']}</span></td><td>${r['응답수']}</td></tr>`).join('')||'<tr><td colspan="4" class="empty">조건에 맞는 기관이 없습니다.</td></tr>'}
+function download(name,rows,heads){if(!result){error('먼저 비교를 실행하세요.');return}const a=document.createElement('a');const url=URL.createObjectURL(new Blob([csvText(rows,heads)],{type:'text/csv;charset=utf-8;'}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function invalidate(message){result=null;$('stats').innerHTML='';$('regionBars').innerHTML='';$('orgTable').innerHTML='';$('reviewTable').innerHTML='';$('reviewCount').textContent='';$('comparisonMeta').textContent=message;$('sourceStatus').textContent='입력이 바뀌었습니다. 다시 비교하세요.'}
+function loadDemo(){mappingChosen=false;pauseRefresh('가상 예제는 자동 갱신하지 않습니다. Google 응답을 수동 연결하세요.',true);clearError();roster=validateRoster(demo.roster);rosterSource='가상 예제 40기관';$('rosterStatus').textContent=rosterSource;setResponses(demo.responses,Object.keys(demo.responses[0]),'가상 설문 응답');$('demoNote').textContent=demo.notice;$('filterState').value='';$('search').value='';run()}
+$('rosterFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;pauseRefresh('명단이 바뀌었습니다. Google 응답을 수동 갱신하면 자동 갱신을 다시 켤 수 있습니다.',true);try{clearError();const parsed=parseCSV(await f.text());roster=validateRoster(parsed.rows);rosterSource=f.name;$('rosterStatus').textContent=`${f.name} · ${roster.length}기관`;$('demoNote').textContent='선택한 CSV는 이 브라우저에서 처리합니다. 실제 파일은 GitHub 저장소에 올리지 마세요.';invalidate('새 명단을 읽었습니다. 응답 자료와 비교하세요.')}catch(err){roster=[];invalidate('기관 명단을 읽지 못했습니다. 명단을 다시 선택하세요.');error(err.message)}};
+$('responseFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;mappingChosen=false;pauseRefresh('CSV는 파일 스냅샷입니다. 새 응답 CSV를 다시 선택해 갱신하세요.',true);try{clearError();const parsed=parseCSV(await f.text());setResponses(parsed.rows,parsed.headers,f.name);$('demoNote').textContent='선택한 응답 CSV는 이 브라우저에서 처리합니다. CSV는 새 파일을 다시 선택해 갱신합니다.';invalidate('새 응답을 읽었습니다. 소속 열을 확인하고 비교하세요.')}catch(err){readFailed=true;invalidate('응답을 읽지 못했습니다. CSV를 확인하세요.');error(err.message)}};
+function googleCsvUrl(raw){let u;try{u=new URL(raw)}catch{throw Error('Google Sheets 주소를 입력하세요.')}if(u.protocol!=='https:'||u.hostname!=='docs.google.com'||!u.pathname.startsWith('/spreadsheets/'))throw Error('설문 작성 링크 대신 docs.google.com의 응답 스프레드시트 주소를 입력하세요.');if(u.pathname.includes('/d/e/')){if(!u.pathname.endsWith('/pub')&&!u.pathname.endsWith('/pubhtml'))throw Error('게시된 Sheets 주소를 확인하세요.');u.pathname=u.pathname.replace(/\/pubhtml$/,'/pub');u.searchParams.set('output','csv');return u.href}let m=u.pathname.match(/^\/spreadsheets\/d\/([A-Za-z0-9_-]+)(?:\/|$)/);if(!m)throw Error('Sheets 문서 ID를 찾지 못했습니다.');const gid=u.searchParams.get('gid')||new URLSearchParams(u.hash.slice(1)).get('gid')||'0';if(!/^\d+$/.test(gid))throw Error('시트 gid가 올바르지 않습니다.');return `https://docs.google.com/spreadsheets/d/${m[1]}/export?format=csv&gid=${gid}`}
+function updateSourceStatus(){
+ $('sourceStatus').classList.toggle('stale',readFailed);
+ if(readFailed){$('sourceStatus').textContent=result?`갱신 실패 (${lastAttemptTime}). 이전 결과를 유지합니다.\n명단: ${rosterSource} / 응답: ${responseSource}\n마지막 성공 읽기: ${readTime}`:'갱신 실패. 성공한 비교 결과가 없습니다. CSV 업로드 또는 수동 갱신으로 다시 시도하세요.';return}
+ $('sourceStatus').textContent=`명단: ${rosterSource} / 응답: ${responseSource}\n마지막 성공 읽기: ${readTime} · 비교 완료`;
+}
+function clearAutoTimer(){clearTimeout(autoTimer);clearInterval(countdownTimer);autoTimer=null;countdownTimer=null;nextRefreshAt=0}
+function updateRefreshStatus(){
+ if(refreshBusy){$('refreshStatus').textContent=$('autoRefresh').checked?'자동 갱신 중입니다. 응답을 다시 읽고 비교합니다.':'수동 갱신 중입니다. 응답을 다시 읽고 비교합니다.';return}
+ if($('autoRefresh').checked&&nextRefreshAt){const seconds=Math.max(0,Math.ceil((nextRefreshAt-Date.now())/1000));$('refreshStatus').textContent=`자동 갱신 켜짐 · 다음 시도까지 ${seconds}초${readFailed?' · 직전 갱신 실패, 이전 결과 유지':''}`;return}
+ $('refreshStatus').textContent=connectedUrl?'자동 갱신 꺼짐 · 수동 갱신 버튼으로 다시 읽고 비교할 수 있습니다.':'Google 응답을 수동 연결하면 자동 갱신을 켤 수 있습니다. CSV는 자동 갱신하지 않습니다.';
+}
+function scheduleRefresh(){
+ clearAutoTimer();if(!$('autoRefresh').checked||!connectedUrl)return;
+ const delay=Number($('refreshInterval').value)*1000;nextRefreshAt=Date.now()+delay;
+ autoTimer=setTimeout(()=>refreshSheet(true),delay);countdownTimer=setInterval(updateRefreshStatus,1000);updateRefreshStatus();
+}
+function pauseRefresh(message,disconnect=false){
+ clearAutoTimer();$('autoRefresh').checked=false;requestId++;if(activeRequest)activeRequest.abort();activeRequest=null;refreshBusy=false;
+ $('loadSheet').disabled=false;$('loadSheet').textContent='Google 응답 수동 갱신';
+ if(disconnect)connectedUrl='';$('autoRefresh').disabled=!connectedUrl;$('refreshStatus').textContent=message||'자동 갱신을 중지했습니다.';
+}
+async function refreshSheet(automatic=false){
+ if(refreshBusy)return;
+ clearAutoTimer();let ctrl=new AbortController(),timeout;const token=++requestId;let url;
+ try{
+  url=googleCsvUrl($('sheetUrl').value.trim());if(automatic&&url!==connectedUrl){pauseRefresh('주소가 바뀌었습니다. 새 주소로 수동 갱신하세요.',true);return}
+  clearError();refreshBusy=true;activeRequest=ctrl;$('loadSheet').disabled=true;$('loadSheet').textContent='읽는 중…';updateRefreshStatus();
+  lastAttemptTime=new Date().toLocaleString('ko-KR');timeout=setTimeout(()=>ctrl.abort(),15000);
+  const r=await fetch(url,{signal:ctrl.signal,credentials:'omit',cache:'no-store'});
+  if(!r.ok)throw Error('응답 시트를 읽지 못했습니다. 권한 또는 게시 상태를 확인하고 CSV 업로드를 사용하세요.');
+  const raw=await r.text();if(token!==requestId)return;
+  if(/^\s*</.test(raw)||raw.toLowerCase().includes('<!doctype html'))throw Error('CSV 대신 로그인·웹 화면이 반환됐습니다. 응답 CSV를 내려받아 업로드하세요.');
+  const parsed=parseCSV(raw);const previousAff=$('affCol').value,previousRegion=$('regionCol').value;
+  const aff=parsed.headers.includes(previousAff)?previousAff:parsed.headers.find(h=>['소속','기관명','소속기관','소속 기관','소속(기관명)'].includes(h));
+  const region=mappingChosen&&previousRegion===''?'':parsed.headers.includes(previousRegion)?previousRegion:parsed.headers.find(h=>['지역','권역','소속지역'].includes(h))||'';
+  if(!aff)throw Error('소속 열을 찾지 못했습니다. CSV를 업로드하고 소속 열을 선택하세요.');
+  // Validate and calculate before committing: bad data must not overwrite the last successful snapshot.
+  const candidate=compare(validateRoster(roster),parsed.rows,aff,region);
+  setResponses(parsed.rows,parsed.headers,'Google Sheets');$('affCol').value=aff;$('regionCol').value=region;
+  connectedUrl=url;result=candidate;$('autoRefresh').disabled=false;readFailed=false;render();
+  $('demoNote').textContent='Google 응답을 브라우저에서 읽어 비교했습니다. 실제 데이터는 GitHub 저장소에 업로드하지 않습니다.';
+ }catch(err){
+  if(token!==requestId)return;
+  readFailed=true;lastAttemptTime=new Date().toLocaleString('ko-KR');updateSourceStatus();
+  error(err.name==='AbortError'?'갱신 시간이 초과됐습니다. 이전 결과를 유지합니다. 잠시 후 다시 시도하거나 CSV를 업로드하세요.':err.message+' 이전 성공 결과가 있으면 유지합니다.');
+ }finally{
+  clearTimeout(timeout);if(token===requestId){refreshBusy=false;activeRequest=null;$('loadSheet').disabled=false;$('loadSheet').textContent='Google 응답 수동 갱신';scheduleRefresh();updateRefreshStatus()}
+ }
+}
+$('loadSheet').onclick=()=>refreshSheet(false);
+$('autoRefresh').onchange=()=>{
+ if(!$('autoRefresh').checked){pauseRefresh('자동 갱신을 중지했습니다. 수동 갱신은 계속 사용할 수 있습니다.');return}
+ if(!connectedUrl){$('autoRefresh').checked=false;error('먼저 Google 응답을 수동 갱신해 연결하세요.');return}
+ clearError();scheduleRefresh();
+};
+$('refreshInterval').onchange=()=>{if($('autoRefresh').checked&&!refreshBusy)scheduleRefresh();else updateRefreshStatus()};
+$('sheetUrl').oninput=()=>pauseRefresh('주소가 바뀌었습니다. 수동 갱신으로 새 주소를 연결하세요.',true);
+window.addEventListener('pagehide',()=>pauseRefresh('페이지를 닫아 자동 갱신을 중지합니다.'));
+
+$('analyze').onclick=run;$('demo').onclick=loadDemo;for(const id of ['filterRegion','filterState','search'])$(id).oninput=renderInstitutions;for(const id of ['affCol','regionCol'])$(id).onchange=()=>{mappingChosen=true;pauseRefresh('열 선택이 바뀌었습니다. 다시 비교하거나 수동 갱신하세요.');invalidate('응답 열 선택이 바뀌었습니다. 다시 비교하세요.')};$('exportMissing').onclick=()=>{if(result)download('미제출기관.csv',result.institutions.filter(r=>r['상태']==='미제출'),['기관ID','지역','기관명','상태','응답수'])};$('exportAll').onclick=()=>{if(result)download('전체제출현황.csv',result.institutions,['기관ID','지역','기관명','상태','응답수'])};$('exportRegions').onclick=()=>{if(result)download('지역별제출률.csv',result.groups,['지역','대상기관','제출기관','미제출기관','제출률'])};loadDemo();
+</script></body></html>
